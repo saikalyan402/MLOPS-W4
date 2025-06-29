@@ -1,8 +1,13 @@
 name: Sanity test
 
 on:
+  # Run on new Pull Requests and when they are updated
+  pull_request:
+    types: [opened, synchronize]
+  # Allow manual runs from the Actions tab
   workflow_dispatch:
 
+# Grant permissions for CML to comment on the PR
 permissions:
   contents: write
   pull-requests: write
@@ -23,17 +28,21 @@ jobs:
         uses: iterative/setup-cml@v2
 
       - name: Install dependencies and run unit tests
+        # The 'tee' command sends output to both the console and the file
         run: |
           pip install -r requirements.txt
           python -m unittest test.py -v | tee test_output.txt
 
       - name: Create CML report
+        # The GITHUB_TOKEN is automatically available to the workflow
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Create a markdown report
           echo "## 🧪 Test Output" > report.md
           echo '```' >> report.md
           cat test_output.txt >> report.md
           echo '```' >> report.md
 
+          # Post the report as a comment on the Pull Request
           cml comment create report.md
