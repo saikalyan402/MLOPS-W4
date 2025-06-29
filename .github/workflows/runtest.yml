@@ -25,7 +25,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-           python -m unittest test.py -v | tee test_output.txt
+          python -m unittest test.py -v | tee test_output.txt
 
       - name: Install CML
         run: npm install -g @dvcorg/cml
@@ -38,7 +38,10 @@ jobs:
           echo '```' >> report.md
           cat test_output.txt >> report.md
           echo '```' >> report.md
+          cml comment create report.md --new
 
-          cml comment create report.md
-
-
+      - name: Show workflow logs
+        run: |
+          ls -lah
+          echo "--- ENV ---"
+          env
