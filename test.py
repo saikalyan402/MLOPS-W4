@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-#Test case
+#all test case
 class TestDecisionTreeModel(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
