@@ -27,6 +27,9 @@ jobs:
         run: |
           python test.py | tee test_output.txt
 
+      - name: Install CML
+        run: npm install -g @dvcorg/cml
+
       - name: Create CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,5 +39,6 @@ jobs:
           cat test_output.txt >> report.md
           echo '```' >> report.md
 
-          npx cml comment create report.md
+          cml comment create report.md
+
 
