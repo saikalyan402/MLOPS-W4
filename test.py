@@ -14,11 +14,11 @@ class TestDecisionTreeModel(unittest.TestCase):
         train, test = train_test_split(cls.data, test_size=0.4, stratify=cls.data['species'], random_state=42)
         cls.X_test = test[['sepal_length','sepal_width','petal_length','petal_width']]
         cls.y_test = test['species']
-    #test1
+    #test11
     def test_model_prediction(self):
         predictions = self.model.predict(self.X_test)
         self.assertEqual(len(predictions), len(self.y_test))
-    #test2
+    #test22
     def test_model_accuracy(self):
         predictions = self.model.predict(self.X_test)
         acc = accuracy_score(self.y_test, predictions)
@@ -26,4 +26,4 @@ class TestDecisionTreeModel(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
+#just adding comments
