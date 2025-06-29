@@ -34,15 +34,13 @@ jobs:
           python -m unittest test.py -v | tee test_output.txt
 
       - name: Create CML report
-        # The GITHUB_TOKEN is automatically available to the workflow
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Create a markdown report
-          echo "## 🧪 Test Output" > report.md
-          echo '```' >> report.md
-          cat test_output.txt >> report.md
-          echo '```' >> report.md
-
-          # Post the report as a comment on the Pull Request
-          cml comment create report.md
+          # Combine the report header and test results, then pipe directly to CML
+          (
+            echo "## 🧪 Test Output"
+            echo '```'
+            cat test_output.txt
+            echo '```'
+          ) | cml comment create --pr
