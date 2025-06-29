@@ -37,10 +37,11 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Combine the report header and test results, then pipe directly to CML
+          # Combine the report header and test results, then pipe directly to CML.
+          # The final '-' tells CML to read from the standard input stream.
           (
             echo "## 🧪 Test Output"
             echo '```'
             cat test_output.txt
             echo '```'
-          ) | cml comment create --pr
+          ) | cml comment create -
